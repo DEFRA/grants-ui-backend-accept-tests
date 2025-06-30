@@ -3,21 +3,21 @@ import { v4 as uuidv4 } from 'uuid'
 
 describe('Observability', () => {
   it('should return success application health', async () => {
-    const res = await request(global.baseUrl)
+    const response = await request(global.baseUrl)
       .get('/health')
       .set('Accept', 'application/json')
 
-    expect(res.status).toEqual(200)
-    expect(res.headers['content-type']).toEqual('application/json; charset=utf-8')
-    expect(res.headers['cache-control']).toEqual('no-cache')
-    expect(res.body).toEqual({ message: 'success' })
+    expect(response.status).toEqual(200)
+    expect(response.headers['content-type']).toEqual('application/json; charset=utf-8')
+    expect(response.headers['cache-control']).toEqual('no-cache')
+    expect(response.body).toEqual({ message: 'success' })
   })
 
   if (process.env.ENVIRONMENT) { // test only works when hosted in CDP
     it('should return the same trace id in response as given in request', async () => {
       const uuid = uuidv4().replace(/-/g, '').toLowerCase()
 
-    const res = await request(global.baseUrl)
+    const response = await request(global.baseUrl)
       .post('/state')
       .send({
         businessId: `${uuidv4().replace(/-/g, '').toLowerCase()}`,
@@ -30,8 +30,8 @@ describe('Observability', () => {
       .set('Accept', 'application/json')
       .set('X-cdp-request-id', uuid)
 
-      expect(res.status).toEqual(201)
-      expect(res.header['x-cdp-request-id']).toBe(uuid)
+      expect(response.status).toEqual(201)
+      expect(response.header['x-cdp-request-id']).toBe(uuid)
     })
   }
 })
