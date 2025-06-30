@@ -11,16 +11,16 @@ module.exports = {
   extends: [
     'standard',
     'prettier',
-    'eslint:recommended',
-    'plugin:wdio/recommended'
+    'eslint:recommended'
   ],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest'
   },
-  plugins: ['prettier', 'wdio'],
+  plugins: ['prettier'],
   rules: {
     'prettier/prettier': 'error',
-    'no-console': 'error'
+    'no-console': 'error',
+    'no-useless-escape': 'off'
   }
 }

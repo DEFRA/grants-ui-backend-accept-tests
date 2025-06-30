@@ -71,7 +71,7 @@ services:
 #
 ################################################################################
 #  cdp-example-node-frontend:
-#    image: defradigital/cdp-example-node-frontend:${CDP_EXAMPLE_NODE_FRONTEND:-latest}
+#    image: defradigital/cdp-example-node-frontend:latest
 #    env_file:
 #      - ./docker/config/defaults.env
 #      - ./docker/config/example-frontend.env
@@ -92,7 +92,7 @@ services:
 
 ################################################################################
 # cdp-example-node-backend:
-#   image: defradigital/cdp-example-node-backend:${CDP_EXAMPLE_NODE_BACKEND:-latest}
+#   image: defradigital/cdp-example-node-backend:latest
 #   env_file:
 #     - ./docker/config/defaults.env
 #     - ./docker/config/example-backend.env
