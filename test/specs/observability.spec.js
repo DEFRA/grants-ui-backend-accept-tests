@@ -21,7 +21,7 @@ describe('Observability', () => {
       .post('/state')
       .send({
         businessId: `${uuidv4().replace(/-/g, '').toLowerCase()}`,
-        userId: `123`,
+        userId: '123',
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: {}
