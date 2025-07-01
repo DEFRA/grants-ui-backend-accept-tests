@@ -29,7 +29,7 @@ describe('GET /state', () => {
       .set('Accept', 'application/json')
 
     expect(retrieveResponse.status).toEqual(200)
-    expect(retrieveResponse.body.state).toEqual(stateValue)
+    expect(retrieveResponse.body).toEqual(stateValue)
   })
 
   it('should retrieve an updated resource', async () => {
@@ -61,7 +61,7 @@ describe('GET /state', () => {
       .set('Accept', 'application/json')
 
     expect(retrieveResponse1.status).toEqual(200)
-    expect(retrieveResponse1.body.state).toEqual(stateValue1)
+    expect(retrieveResponse1.body).toEqual(stateValue1)
 
     const updateResponse = await request(global.baseUrl)
       .post('/state')
@@ -82,7 +82,7 @@ describe('GET /state', () => {
       .set('Accept', 'application/json')
 
     expect(retrieveResponse2.status).toEqual(200)
-    expect(retrieveResponse2.body.state).toEqual(stateValue2)
+    expect(retrieveResponse2.body).toEqual(stateValue2)
   })
 
   it('should return 404 when resource not found', async () => {
@@ -135,7 +135,7 @@ describe('GET /state', () => {
       .set('Accept', 'application/json')
 
     expect(retrieveResponse.status).toEqual(200)
-    expect(retrieveResponse.body.state).toEqual({
+    expect(retrieveResponse.body).toEqual({
       grantVersion: 'R1'
     })
   })
