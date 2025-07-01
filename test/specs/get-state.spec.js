@@ -93,6 +93,53 @@ describe('GET /state', () => {
     expect(response.status).toEqual(404)
   })
 
+  it('should ignore grantVersion when querying and return the first document based on 4 key index order', async () => {
+    const businessId = uuidv4()
+    const userId = uuidv4()
+    const grantId = 'adding-value'
+
+    const createResponseR2 = await request(global.baseUrl)
+      .post('/state')
+      .send({
+        businessId: businessId,
+        userId: userId,
+        grantId: grantId,
+        grantVersion: 'R2', // create R2 first
+        state: {
+          grantVersion: 'R2'
+        }
+      })
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+
+    expect(createResponseR2.status).toEqual(201)
+
+    const createResponseR1 = await request(global.baseUrl)
+      .post('/state')
+      .send({
+        businessId: businessId,
+        userId: userId,
+        grantId: grantId,
+        grantVersion: 'R1', // create R1 second
+        state: {
+          grantVersion: 'R1'
+        }
+      })
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+
+    expect(createResponseR1.status).toEqual(201)
+
+    const retrieveResponse = await request(global.baseUrl)
+      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}&grantVersion=xyz`) // any grantVersion
+      .set('Accept', 'application/json')
+
+    expect(retrieveResponse.status).toEqual(200)
+    expect(retrieveResponse.body.state).toEqual({
+      grantVersion: 'R1'
+    })
+  })
+
   it('should receive expected response headers on GET', async () => {
     const businessId = uuidv4()
     const userId = uuidv4()
