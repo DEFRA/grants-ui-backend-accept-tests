@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 describe('GET /state', () => {
   it('should retrieve a resource', async () => {
     const businessId = uuidv4()
+    const userId = uuidv4()
     const stateValue = {
       property1: "value1",
       property2: "value2"
@@ -13,7 +14,7 @@ describe('GET /state', () => {
       .post('/state')
       .send({
         businessId: businessId,
-        userId: '123',
+        userId: userId,
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: stateValue
@@ -24,7 +25,7 @@ describe('GET /state', () => {
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=123&grantId=adding-value&grantVersion=R2`)
+      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value&grantVersion=R2`)
       .set('Accept', 'application/json')
 
     expect(retrieveResponse.status).toEqual(200)
@@ -33,6 +34,7 @@ describe('GET /state', () => {
 
   it('should retrieve an updated resource', async () => {
     const businessId = uuidv4()
+    const userId = uuidv4()
     const stateValue1 = {
       property1: "value1"
     }
@@ -44,7 +46,7 @@ describe('GET /state', () => {
       .post('/state')
       .send({
         businessId: businessId,
-        userId: '123',
+        userId: userId,
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: stateValue1
@@ -55,7 +57,7 @@ describe('GET /state', () => {
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=123&grantId=adding-value&grantVersion=R2`)
+      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value&grantVersion=R2`)
       .set('Accept', 'application/json')
 
     expect(retrieveResponse1.status).toEqual(200)
@@ -65,7 +67,7 @@ describe('GET /state', () => {
       .post('/state')
       .send({
         businessId: businessId,
-        userId: '123',
+        userId: userId,
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: stateValue2
@@ -76,7 +78,7 @@ describe('GET /state', () => {
     expect(updateResponse.status).toEqual(200)
 
     const retrieveResponse2 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=123&grantId=adding-value&grantVersion=R2`)
+      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value&grantVersion=R2`)
       .set('Accept', 'application/json')
 
     expect(retrieveResponse2.status).toEqual(200)
@@ -85,7 +87,7 @@ describe('GET /state', () => {
 
   it('should return 404 when resource not found', async () => {
     const response = await request(global.baseUrl)
-      .get(`/state?businessId=${uuidv4()}&userId=123&grantId=adding-value&grantVersion=R2`)
+      .get(`/state?businessId=${uuidv4()}&userId=${uuidv4()}&grantId=adding-value&grantVersion=R2`)
       .set('Accept', 'application/json')
 
     expect(response.status).toEqual(404)
@@ -93,12 +95,13 @@ describe('GET /state', () => {
 
   it('should receive expected response headers on GET', async () => {
     const businessId = uuidv4()
+    const userId = uuidv4()
 
     const createResponse = await request(global.baseUrl)
       .post('/state')
       .send({
         businessId: businessId,
-        userId: '123',
+        userId: userId,
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: {}
@@ -109,7 +112,7 @@ describe('GET /state', () => {
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=123&grantId=adding-value&grantVersion=R2`)
+      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value&grantVersion=R2`)
       .set('Accept', 'application/json')
 
     expect(retrieveResponse.status).toEqual(200)

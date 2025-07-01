@@ -7,7 +7,7 @@ describe('/state', () => {
       .post('/state')
       .send({
         businessId: uuidv4(),
-        userId: '123',
+        userId: uuidv4(),
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: {}
@@ -22,12 +22,13 @@ describe('/state', () => {
 
   it('should update an existing resource', async () => {
     const businessId = uuidv4()
+    const userId = uuidv4()
 
     const createResponse = await request(global.baseUrl)
       .post('/state')
       .send({
         businessId: businessId,
-        userId: '123',
+        userId: userId,
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: {
@@ -43,7 +44,7 @@ describe('/state', () => {
       .post('/state')
       .send({
         businessId: businessId,
-        userId: `123`,
+        userId: userId,
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: {
@@ -63,7 +64,7 @@ describe('/state', () => {
       .post('/state')
       .send({
         businessId: uuidv4(),
-        userId: '123',
+        userId: uuidv4(),
         grantId: 'adding-value',
         grantVersion: 'R2',
         state: {}
