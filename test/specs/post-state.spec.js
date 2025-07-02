@@ -1,7 +1,7 @@
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 
-describe('/state', () => {
+describe('POST /state', () => {
   it('should create a new resource', async () => {
     const response = await request(global.baseUrl)
       .post('/state')
