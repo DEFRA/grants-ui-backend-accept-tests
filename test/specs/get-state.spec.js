@@ -93,6 +93,31 @@ describe('GET /state', () => {
     expect(response.status).toEqual(404)
   })
 
+  it('should return 400 when required parameters not supplied', async () => {
+    const businessId = uuidv4()
+    const userId = uuidv4()
+
+    const createResponse = await request(global.baseUrl)
+      .post('/state')
+      .send({
+        businessId: businessId,
+        userId: userId,
+        grantId: 'adding-value',
+        grantVersion: 'R2',
+        state: {}
+      })
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+
+    expect(createResponse.status).toEqual(201)
+
+    const retrieveResponse = await request(global.baseUrl)
+      .get(`/state?businessId=${businessId}&userId=${userId}`) // the API will 404 first so we must use valid stored values
+      .set('Accept', 'application/json')
+
+    expect(retrieveResponse.status).toEqual(400)
+  })
+
   it('should ignore grantVersion when querying and return the first document based on 4 key index order', async () => {
     const businessId = uuidv4()
     const userId = uuidv4()
