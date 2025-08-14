@@ -9,7 +9,7 @@ describe('POST /state', () => {
         businessId: uuidv4(),
         userId: uuidv4(),
         grantId: 'adding-value',
-        grantVersion: 'R2',
+        grantVersion: '1',
         state: {}
       })
       .set('Content-Type', 'application/json')
@@ -30,7 +30,7 @@ describe('POST /state', () => {
         businessId: businessId,
         userId: userId,
         grantId: 'adding-value',
-        grantVersion: 'R2',
+        grantVersion: '1',
         state: {
           property: "original"
         }
@@ -46,7 +46,7 @@ describe('POST /state', () => {
         businessId: businessId,
         userId: userId,
         grantId: 'adding-value',
-        grantVersion: 'R2',
+        grantVersion: '1',
         state: {
           property: "updated"
         }
@@ -66,7 +66,7 @@ describe('POST /state', () => {
         businessId: uuidv4(),
         userId: uuidv4(),
         grantId: 'adding-value',
-        grantVersion: 'R2',
+        grantVersion: '1',
         state: {}
       })
       .set('Content-Type', 'application/json')
