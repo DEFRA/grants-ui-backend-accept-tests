@@ -23,7 +23,7 @@ describe('Observability', () => {
           businessId: uuidv4(),
           userId: uuidv4(),
           grantId: 'adding-value',
-          grantVersion: 'R2',
+          grantVersion: '1',
           state: {}
         })
         .set('Content-Type', 'application/json')
