@@ -7,6 +7,11 @@ This is the acceptance test suite for the `grants-ui-backend` service located at
 Specify the application you are testing in the url specified as `global.baseUrl` in [.jest/setup.js](.jest/setup.js). The presence of `process.env.ENVIRONMENT` in this file is assumed to mean the tests are running in the CDP portal.
 
 ```bash
+# you must provide the following environment variables in your environment, e.g. in an .env file
+# ENVIRONMENT
+# GRANTS_UI_BACKEND_AUTH_TOKEN
+# GRANTS_UI_BACKEND_ENCRYPTION_KEY
+
 npm test
 ```
 

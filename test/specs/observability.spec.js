@@ -1,7 +1,14 @@
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
+import { getGrantsUiBackendAuthorizationToken } from '../services/backend-auth-helper'
 
 describe('Observability', () => {
+  var AUTHORIZATION_TOKEN
+
+  beforeAll(() => {
+    AUTHORIZATION_TOKEN = getGrantsUiBackendAuthorizationToken()
+  })
+
   it('should return success application health', async () => {
     const response = await request(global.baseUrl)
       .get('/health')
@@ -28,6 +35,7 @@ describe('Observability', () => {
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
+        .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
         .set('X-cdp-request-id', cdpRequestId)
 
       expect(response.status).toEqual(201)

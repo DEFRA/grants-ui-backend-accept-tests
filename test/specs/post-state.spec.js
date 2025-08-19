@@ -1,7 +1,14 @@
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
+import { getGrantsUiBackendAuthorizationToken } from '../services/backend-auth-helper'
 
 describe('POST /state', () => {
+  var AUTHORIZATION_TOKEN
+
+  beforeAll(() => {
+    AUTHORIZATION_TOKEN = getGrantsUiBackendAuthorizationToken()
+  })
+
   it('should create a new resource', async () => {
     const response = await request(global.baseUrl)
       .post('/state')
@@ -14,6 +21,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(201)
     expect(response.body.success).toEqual(true)
@@ -37,6 +45,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponse.status).toEqual(201)
 
@@ -53,6 +62,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(updateResponse.status).toEqual(200)
     expect(updateResponse.body.success).toEqual(true)
@@ -71,6 +81,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(201)
     expect(response.headers['content-type']).toEqual('application/json; charset=utf-8')
@@ -85,6 +96,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(400)
   })

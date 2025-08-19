@@ -1,7 +1,14 @@
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
+import { getGrantsUiBackendAuthorizationToken } from '../services/backend-auth-helper'
 
 describe('DELETE /state', () => {
+  var AUTHORIZATION_TOKEN
+
+  beforeAll(() => {
+    AUTHORIZATION_TOKEN = getGrantsUiBackendAuthorizationToken()
+  })
+
   it('should delete a resource', async () => {
     const businessId = uuidv4()
     const userId = uuidv4()
@@ -20,21 +27,25 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
       .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
     expect(retrieveResponse1.status).toEqual(200)
 
     const deleteResponse = await request(global.baseUrl)
       .delete(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
     expect(deleteResponse.status).toEqual(200)
 
     const retrieveResponse2 = await request(global.baseUrl)
       .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
     expect(retrieveResponse2.status).toEqual(404)
   })
 
@@ -42,6 +53,7 @@ describe('DELETE /state', () => {
     const response = await request(global.baseUrl)
       .delete(`/state?businessId=${uuidv4()}&userId=${uuidv4()}&grantId=adding-value`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(404)
   })
@@ -53,6 +65,7 @@ describe('DELETE /state', () => {
     const retrieveResponse = await request(global.baseUrl)
       .delete(`/state?businessId=${businessId}&userId=${userId}`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse.status).toEqual(400)
   })
@@ -75,6 +88,7 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR1.status).toEqual(201)
 
@@ -91,6 +105,7 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR2.status).toEqual(201)
 
@@ -107,12 +122,14 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR3.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
       .get(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse1.status).toEqual(200)
     expect(retrieveResponse1.body).toEqual({
@@ -122,12 +139,14 @@ describe('DELETE /state', () => {
     const deleteResponse = await request(global.baseUrl)
       .delete(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(deleteResponse.status).toEqual(200)
 
     const retrieveResponse3 = await request(global.baseUrl)
       .get(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse3.status).toEqual(200)
     expect(retrieveResponse3.body).toEqual({
