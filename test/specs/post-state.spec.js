@@ -88,6 +88,22 @@ describe('POST /state', () => {
     expect(response.headers['cache-control']).toEqual('no-cache')
   })
 
+  it('should return 401 when authorization header not supplied', async () => {
+    const response = await request(global.baseUrl)
+      .post('/state')
+      .send({
+        businessId: uuidv4(),
+        userId: uuidv4(),
+        grantId: 'adding-value',
+        grantVersion: '1',
+        state: {}
+      })
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+
+    expect(response.status).toEqual(401)
+  })
+
   it('should return 400 when input does not conform to expected JSON format', async () => {
     const response = await request(global.baseUrl)
       .post('/state')

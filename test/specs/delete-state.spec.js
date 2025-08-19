@@ -58,6 +58,17 @@ describe('DELETE /state', () => {
     expect(response.status).toEqual(404)
   })
 
+  it('should return 401 when authorization header not supplied', async () => {
+    const businessId = uuidv4()
+    const userId = uuidv4()
+
+    const retrieveResponse = await request(global.baseUrl)
+      .delete(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .set('Accept', 'application/json')
+
+    expect(retrieveResponse.status).toEqual(401)
+  })
+
   it('should return 400 when required parameters not supplied', async () => {
     const businessId = uuidv4()
     const userId = uuidv4()
