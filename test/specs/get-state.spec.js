@@ -10,8 +10,8 @@ describe('GET /state', () => {
   })
 
   it('should retrieve a resource', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
+    const sbi = uuidv4()
+    const grantCode = 'test-grant'
     const stateValue = {
       property1: "value1",
       property2: "value2"
@@ -20,9 +20,8 @@ describe('GET /state', () => {
     const createResponse = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: 'adding-value',
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: stateValue
       })
@@ -33,7 +32,7 @@ describe('GET /state', () => {
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -42,8 +41,8 @@ describe('GET /state', () => {
   })
 
   it('should retrieve an updated resource', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
+    const sbi = uuidv4()
+    const grantCode = 'test-grant'
     const stateValue1 = {
       property1: "value1"
     }
@@ -54,9 +53,8 @@ describe('GET /state', () => {
     const createResponse = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: 'adding-value',
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: stateValue1
       })
@@ -67,7 +65,7 @@ describe('GET /state', () => {
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -77,9 +75,8 @@ describe('GET /state', () => {
     const updateResponse = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: 'adding-value',
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: stateValue2
       })
@@ -90,7 +87,7 @@ describe('GET /state', () => {
     expect(updateResponse.status).toEqual(200)
 
     const retrieveResponse2 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -100,7 +97,7 @@ describe('GET /state', () => {
 
   it('should return 404 when resource not found', async () => {
     const response = await request(global.baseUrl)
-      .get(`/state?businessId=${uuidv4()}&userId=${uuidv4()}&grantId=adding-value`)
+      .get(`/state?sbi=${uuidv4()}&grantCode=test-grant`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -108,22 +105,18 @@ describe('GET /state', () => {
   })
 
   it('should return 401 when authorization header not supplied', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
-
     const retrieveResponse = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .get(`/state?sbi=${uuidv4()}&grantCode=test-grant`)
       .set('Accept', 'application/json')
 
     expect(retrieveResponse.status).toEqual(401)
   })
 
   it('should return 400 when required parameters not supplied', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
+    const sbi = uuidv4()
 
     const retrieveResponse = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}`)
+      .get(`/state?sbi=${sbi}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -131,16 +124,14 @@ describe('GET /state', () => {
   })
 
   it('should ignore grantVersion when querying and return the highest version document', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
-    const grantId = 'adding-value'
+    const sbi = uuidv4()
+    const grantCode = 'test-grant'
 
     const createResponseR1 = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: grantId,
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: {
           grantVersion: 'R1'
@@ -155,9 +146,8 @@ describe('GET /state', () => {
     const createResponseR2 = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: grantId,
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '2',
         state: {
           grantVersion: 'R2'
@@ -172,9 +162,8 @@ describe('GET /state', () => {
     const createResponseR3 = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: grantId,
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '3',
         state: {
           grantVersion: 'R3'
@@ -187,7 +176,7 @@ describe('GET /state', () => {
     expect(createResponseR3.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}&grantVersion=1`) // grantVersion param has no effect
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}&grantVersion=1`) // grantVersion param has no effect
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -198,15 +187,14 @@ describe('GET /state', () => {
   })
 
   it('should receive expected response headers on GET', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
+    const sbi = uuidv4()
+    const grantCode = 'test-grant'
 
     const createResponse = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: 'adding-value',
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: {}
       })
@@ -217,7 +205,7 @@ describe('GET /state', () => {
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 

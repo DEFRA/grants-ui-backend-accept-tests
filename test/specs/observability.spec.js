@@ -27,9 +27,8 @@ describe('Observability', () => {
       const response = await request(global.baseUrl)
         .post('/state')
         .send({
-          businessId: uuidv4(),
-          userId: uuidv4(),
-          grantId: 'adding-value',
+          sbi: uuidv4(),
+          grantCode: 'test-value',
           grantVersion: '1',
           state: {}
         })

@@ -13,9 +13,8 @@ describe('POST /state', () => {
     const response = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: uuidv4(),
-        userId: uuidv4(),
-        grantId: 'adding-value',
+        sbi: uuidv4(),
+        grantCode: 'test-grant',
         grantVersion: '1',
         state: {}
       })
@@ -29,15 +28,14 @@ describe('POST /state', () => {
   })
 
   it('should update an existing resource', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
+    const sbi = uuidv4()
+    const grantCode = 'test-grant'
 
     const createResponse = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: 'adding-value',
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: {
           property: "original"
@@ -52,9 +50,8 @@ describe('POST /state', () => {
     const updateResponse = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: 'adding-value',
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: {
           property: "updated"
@@ -73,9 +70,8 @@ describe('POST /state', () => {
     const response = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: uuidv4(),
-        userId: uuidv4(),
-        grantId: 'adding-value',
+        sbi: uuidv4(),
+        grantCode: 'test-grant',
         grantVersion: '1',
         state: {}
       })
@@ -92,9 +88,8 @@ describe('POST /state', () => {
     const response = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: uuidv4(),
-        userId: uuidv4(),
-        grantId: 'adding-value',
+        sbi: uuidv4(),
+        grantCode: 'test-grant',
         grantVersion: '1',
         state: {}
       })

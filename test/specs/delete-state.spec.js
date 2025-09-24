@@ -10,8 +10,8 @@ describe('DELETE /state', () => {
   })
 
   it('should delete a resource', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
+    const sbi = uuidv4()
+    const grantCode='test-grant'
     const stateValue = {
       property1: "value1"
     }
@@ -19,9 +19,8 @@ describe('DELETE /state', () => {
     const createResponse = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: 'adding-value',
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: stateValue
       })
@@ -31,19 +30,19 @@ describe('DELETE /state', () => {
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
     expect(retrieveResponse1.status).toEqual(200)
 
     const deleteResponse = await request(global.baseUrl)
-      .delete(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .delete(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
     expect(deleteResponse.status).toEqual(200)
 
     const retrieveResponse2 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
     expect(retrieveResponse2.status).toEqual(404)
@@ -51,7 +50,7 @@ describe('DELETE /state', () => {
 
   it('should return 404 when resource not found', async () => {
     const response = await request(global.baseUrl)
-      .delete(`/state?businessId=${uuidv4()}&userId=${uuidv4()}&grantId=adding-value`)
+      .delete(`/state?sbi=${uuidv4()}&grantCode=test-grant`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -59,22 +58,16 @@ describe('DELETE /state', () => {
   })
 
   it('should return 401 when authorization header not supplied', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
-
     const retrieveResponse = await request(global.baseUrl)
-      .delete(`/state?businessId=${businessId}&userId=${userId}&grantId=adding-value`)
+      .delete(`/state?sbi=${uuidv4()}&grantCode=test-grant`)
       .set('Accept', 'application/json')
 
     expect(retrieveResponse.status).toEqual(401)
   })
 
   it('should return 400 when required parameters not supplied', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
-
     const retrieveResponse = await request(global.baseUrl)
-      .delete(`/state?businessId=${businessId}&userId=${userId}`)
+      .delete(`/state?sbi=${uuidv4()}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -82,16 +75,14 @@ describe('DELETE /state', () => {
   })
 
   it('should ignore grantVersion when querying and delete the highest version document', async () => {
-    const businessId = uuidv4()
-    const userId = uuidv4()
-    const grantId = 'adding-value'
+    const sbi = uuidv4()
+    const grantCode = 'test-grant'
 
     const createResponseR1 = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: grantId,
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '1',
         state: {
           grantVersion: 'R1'
@@ -106,9 +97,8 @@ describe('DELETE /state', () => {
     const createResponseR2 = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: grantId,
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '2',
         state: {
           grantVersion: 'R2'
@@ -123,9 +113,8 @@ describe('DELETE /state', () => {
     const createResponseR3 = await request(global.baseUrl)
       .post('/state')
       .send({
-        businessId: businessId,
-        userId: userId,
-        grantId: grantId,
+        sbi: sbi,
+        grantCode: grantCode,
         grantVersion: '3',
         state: {
           grantVersion: 'R3'
@@ -138,7 +127,7 @@ describe('DELETE /state', () => {
     expect(createResponseR3.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
@@ -148,14 +137,14 @@ describe('DELETE /state', () => {
     })
 
     const deleteResponse = await request(global.baseUrl)
-      .delete(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}`)
+      .delete(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
     expect(deleteResponse.status).toEqual(200)
 
     const retrieveResponse3 = await request(global.baseUrl)
-      .get(`/state?businessId=${businessId}&userId=${userId}&grantId=${grantId}`)
+      .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
 
