@@ -26,25 +26,25 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
     expect(retrieveResponse1.status).toEqual(200)
 
     const deleteResponse = await request(global.baseUrl)
       .delete(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
     expect(deleteResponse.status).toEqual(200)
 
     const retrieveResponse2 = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
     expect(retrieveResponse2.status).toEqual(404)
   })
 
@@ -52,7 +52,7 @@ describe('DELETE /state', () => {
     const response = await request(global.baseUrl)
       .delete(`/state?sbi=${uuidv4()}&grantCode=test-grant`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(404)
   })
@@ -69,7 +69,7 @@ describe('DELETE /state', () => {
     const retrieveResponse = await request(global.baseUrl)
       .delete(`/state?sbi=${uuidv4()}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse.status).toEqual(400)
   })
@@ -90,7 +90,7 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR1.status).toEqual(201)
 
@@ -106,7 +106,7 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR2.status).toEqual(201)
 
@@ -122,14 +122,14 @@ describe('DELETE /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR3.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse1.status).toEqual(200)
     expect(retrieveResponse1.body).toEqual({
@@ -139,14 +139,14 @@ describe('DELETE /state', () => {
     const deleteResponse = await request(global.baseUrl)
       .delete(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(deleteResponse.status).toEqual(200)
 
     const retrieveResponse3 = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse3.status).toEqual(200)
     expect(retrieveResponse3.body).toEqual({

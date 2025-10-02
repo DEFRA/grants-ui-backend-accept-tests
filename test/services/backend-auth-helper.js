@@ -32,5 +32,5 @@ export function encryptToken(token) {
 
 export function getGrantsUiBackendAuthorizationToken() {
   const encryptedToken = encryptToken(GRANTS_UI_BACKEND_AUTH_TOKEN)
-  return Buffer.from(`:${encryptedToken}`).toString(ENCODING.BASE64)
+  return Buffer.from(`${encryptedToken}`).toString(ENCODING.BASE64)
 }

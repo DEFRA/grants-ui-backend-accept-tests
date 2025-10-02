@@ -34,7 +34,7 @@ describe('Observability', () => {
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+        .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
         .set('X-cdp-request-id', cdpRequestId)
 
       expect(response.status).toEqual(201)

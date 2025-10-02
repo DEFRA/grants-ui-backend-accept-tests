@@ -20,7 +20,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(201)
     expect(response.body.success).toEqual(true)
@@ -43,7 +43,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponse.status).toEqual(201)
 
@@ -59,7 +59,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(updateResponse.status).toEqual(200)
     expect(updateResponse.body.success).toEqual(true)
@@ -77,7 +77,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(201)
     expect(response.headers['content-type']).toEqual('application/json; charset=utf-8')
@@ -107,7 +107,7 @@ describe('POST /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(400)
   })

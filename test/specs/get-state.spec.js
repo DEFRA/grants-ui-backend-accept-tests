@@ -27,14 +27,14 @@ describe('GET /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse.status).toEqual(200)
     expect(retrieveResponse.body).toEqual(stateValue)
@@ -60,14 +60,14 @@ describe('GET /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse1 = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse1.status).toEqual(200)
     expect(retrieveResponse1.body).toEqual(stateValue1)
@@ -82,14 +82,14 @@ describe('GET /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(updateResponse.status).toEqual(200)
 
     const retrieveResponse2 = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse2.status).toEqual(200)
     expect(retrieveResponse2.body).toEqual(stateValue2)
@@ -99,7 +99,7 @@ describe('GET /state', () => {
     const response = await request(global.baseUrl)
       .get(`/state?sbi=${uuidv4()}&grantCode=test-grant`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(response.status).toEqual(404)
   })
@@ -118,7 +118,7 @@ describe('GET /state', () => {
     const retrieveResponse = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse.status).toEqual(400)
   })
@@ -139,7 +139,7 @@ describe('GET /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR1.status).toEqual(201)
 
@@ -155,7 +155,7 @@ describe('GET /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR2.status).toEqual(201)
 
@@ -171,14 +171,14 @@ describe('GET /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponseR3.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}&grantVersion=1`) // grantVersion param has no effect
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse.status).toEqual(200)
     expect(retrieveResponse.body).toEqual({
@@ -200,14 +200,14 @@ describe('GET /state', () => {
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(createResponse.status).toEqual(201)
 
     const retrieveResponse = await request(global.baseUrl)
       .get(`/state?sbi=${sbi}&grantCode=${grantCode}`)
       .set('Accept', 'application/json')
-      .set('Authorization', `Basic ${AUTHORIZATION_TOKEN}`)
+      .set('Authorization', `Bearer ${AUTHORIZATION_TOKEN}`)
 
     expect(retrieveResponse.status).toEqual(200)
     expect(retrieveResponse.headers['content-type']).toEqual('application/json; charset=utf-8')
